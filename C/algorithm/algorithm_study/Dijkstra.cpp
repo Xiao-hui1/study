@@ -43,8 +43,10 @@ int main()
     {
         auto [d, u] = pq.top();
         pq.pop();
+
         if (d > dist[u])
             continue;
+
         for (auto [v, w] : graph[u])
         {
             if (dist[v] > dist[u] + w)

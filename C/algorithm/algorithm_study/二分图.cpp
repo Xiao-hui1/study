@@ -47,6 +47,7 @@ public:
     bool vis[MAXN];
     solve() {};
     ~solve() {};
+
     bool dfs(int u)
     {
         for (int v : g[u])
@@ -54,7 +55,7 @@ public:
             if (!vis[v])
             {
                 vis[v] = true;
-                if (matchR[v] = -1 || dfs(matchR[v]))
+                if (matchR[v] == -1 || dfs(matchR[v]))
                 {
                     matchR[v] = u;
                     return true;

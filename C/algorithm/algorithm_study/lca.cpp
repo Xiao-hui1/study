@@ -8,6 +8,7 @@ int ans[N], parent[N], ancestor[N];
 bool vis[N];
 
 // 并查集
+
 int find(int u)
 {
     if (parent[u] != u)
