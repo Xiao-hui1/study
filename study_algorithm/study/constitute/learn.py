@@ -20,6 +20,8 @@ class phone:
     def call_by_5g(self):
         self.__5g_check()
         print("正在通话")
+
+
 iphone = phone()
 iphone.call_by_5g()
 
@@ -73,7 +75,7 @@ class call:
 
 #多继承
 class My_Phone(Phone,call): #从左往右继承，在前面没有的情况就会先后寻找
-    producer :str = "Asus"
+    producer: str = "Asus"
     number :int = 5
     my_name = ["wangyan", 1, "tiancai"]
     # def __init__(self,name):

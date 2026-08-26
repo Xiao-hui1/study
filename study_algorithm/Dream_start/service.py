@@ -54,3 +54,6 @@ elif command == '5':
     sys.exit(0)
 
 s.close()
+
+
+

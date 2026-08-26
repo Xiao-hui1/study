@@ -123,34 +123,136 @@
 #
 # print(ans)
 
-import sys
-input = sys.stdin.readline
+# import sys
+# input = sys.stdin.readline
+#
+# def solve():
+#     n, c, b = map(int, input().split())
+#     s = [0] + list(map(int, input().split()))
+#     a = [0] + list(map(int, input().split()))
+#     dp = [0] * (n + 1)
+#     ans = 0
+#     dp[0] = b
+#     f = 1
+#     for i in range(1, n + 1):
+#         sum = 9**18
+#         for j in range(i, -1, -1):
+#             dp[j] = min(dp[j] + s[i], c)
+#             if j:
+#                 dp[j] = max(min(dp[j - 1] + 2 * s[i], c), dp[j])
+#             if dp[j] >= a[i]:
+#                 sum = min(sum, j)
+#             else:
+#                 dp[j] = -float('inf')
+#
+#         ans = max(ans, sum)
+#         if ans == 9**18:
+#             print(-1)
+#             return
+#     print(ans)
+#     return
+#
+# if "__main__" == __name__:
+#     solve()
 
-def solve():
-    n, c, b = map(int, input().split())
-    s = [0] + list(map(int, input().split()))
-    a = [0] + list(map(int, input().split()))
-    dp = [0] * (n + 1)
-    ans = 0
-    dp[0] = b
-    f = 1
-    for i in range(1, n + 1):
-        sum = 9**18
-        for j in range(i, -1, -1):
-            dp[j] = min(dp[j] + s[i], c)
-            if j:
-                dp[j] = max(min(dp[j - 1] + 2 * s[i], c), dp[j])
-            if dp[j] >= a[i]:
-                sum = min(sum, j)
-            else:
-                dp[j] = -float('inf')
 
-        ans = max(ans, sum)
-        if ans == 9**18:
-            print(-1)
-            return
-    print(ans)
-    return
+# import collections
+# t = int(input())
+# for _ in range(t):
+#     n = int(input())
+#     d = []
+#     for i in range(n):
+#         s = input().split()
+#         d.append(s)
+#     d = sorted(d,key = lambda x: (x[0], x[2]))
+#     mp = collections.defaultdict(list)
+#     per = [[0] * 26]*100003
+#     cur = 0
+#     for i in range(n):
+#         if cur != 0 and d[i][0] != d[i-1][0]:
+#             cur += 1
+#         if d[i][3] =='Rejected':
+#             per[cur][ord(d[i][1] - 'A')] += 20
+#         if d[i][3] == 'Accepted':
+#             mp[d[i][0]] =
 
-if "__main__" == __name__:
-    solve()
+
+# import sys
+# from collections import Counter
+#
+# MOD = 998244353
+# INV2 = (MOD + 1) // 2
+#
+# input = sys.stdin.readline
+#
+#
+# def solve():
+#
+#     T = int(input())
+#
+#     MAXN = 200005
+#
+#     pow2 = [1] * (MAXN + 5)
+#     pow3 = [1] * (MAXN + 5)
+#
+#     for i in range(1, MAXN + 5):
+#         pow2[i] = pow2[i-1] * 2 % MOD
+#         pow3[i] = pow3[i-1] * 3 % MOD
+#
+#
+#     ans = []
+#
+#     for _ in range(T):
+#
+#         n = int(input())
+#
+#         a = list(map(int,input().split()))
+#
+#         cnt = Counter(a)
+#
+#         res = 0
+#
+#         less = 0
+#
+#         for x,c in sorted(cnt.items()):
+#
+#             L = less
+#
+#             # 3^L(3^C-1)
+#             part1 = (
+#                 pow3[L] *
+#                 (pow3[c]-1)
+#             ) % MOD
+#
+#
+#             # (2^C-1)(3^L-1)
+#             part2 = (
+#                 (pow2[c]-1) *
+#                 (pow3[L]-1)
+#             ) % MOD
+#
+#
+#             coef = (part1 - part2) % MOD
+#             coef = coef * INV2 % MOD
+#
+#
+#             res = (
+#                 res +
+#                 x * coef
+#             ) % MOD
+#
+#
+#             less += c
+#
+#
+#         ans.append(str(res))
+#
+#
+#     print("\n".join(ans))
+#
+#
+# if __name__ == "__main__":
+#     solve()
+
+
+import math
