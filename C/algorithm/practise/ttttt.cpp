@@ -409,8 +409,6 @@ const ll N = 1e6 + 3;
 
 int main()
 {
-    ll a, b;
-    cin >> a >> b;
-    cout << a + b;
+    cout << "hello world" << endl;
     return 0;
 }
