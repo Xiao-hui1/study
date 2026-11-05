@@ -12,7 +12,8 @@ class Node(object):
         self.height = 1
 
 def updateHeight(node):
-    pass
+    if node:
+        node.height = 1 + max(Height(node.left), Height(node.right))
 
 def LL_Rotation(node):
     temp = node.left
@@ -37,20 +38,17 @@ def LR_Rotation(node):
 
 
 def RL_Rotation(node):
-    node.right = RR_Rotation(node.right)
+    node.right = LL_Rotation(node.right)
     return RR_Rotation(node)
 
 
 def Height(node):
-    return 1
+    return node.height if node else 0
 
 
 def Insert(node, val):
     if not node:
-        node = Node()
-        node.left = node.right = None
-        node.val = val
-        return node
+        return Node(val)
     if node.val == val:
         return node
     if val < node.val:  #插入左子树
@@ -64,10 +62,11 @@ def Insert(node, val):
     else:       #插入右子树
         node.right = Insert(node.right, val)
         if (Height(node.right) - Height(node.left) == 2):
+            # val 比右孩子小说明插在右孩子的左子树，是 RL 型；否则是 RR 型
             if val < node.right.val:
-                node = RR_Rotation(node)
-            else:
                 node = RL_Rotation(node)
+            else:
+                node = RR_Rotation(node)
     updateHeight(node)
     return node
 

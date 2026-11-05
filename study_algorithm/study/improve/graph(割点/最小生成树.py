@@ -1,13 +1,16 @@
 """
-    最小生成树算法：
-        Prim算法：（O(n^2)）
-            思想：先选择任意一个节点，查找和当前这个节点相邻且位权最小的节点，把这个节点链接上来，并同时记录和新来节点相邻的节点的位权，
-            用两个数组记录，一个数组记录那些节点已经连接了，和那个节点连接的，另一个数组记录，当前节点和已经建立了连接的节点中的那个节点最近，
-            并且记录他的权值
+最小生成树算法：
+    Prim算法：（O(n^2)）
+        思想：先选择任意一个节点，查找和当前这个节点相邻且位权最小的节点，把这个节点链接上来，并同时记录和新来节点相邻的节点的位权，
+        用两个数组记录，一个数组记录那些节点已经连接了，和那个节点连接的，另一个数组记录，当前节点和已经建立了连接的节点中的那个节点最近，
+        并且记录他的权值
 
 """
+
 import heapq, sys, math, random
+
 input = sys.stdin.readline
+
 
 class Prim:
     def __init__(self, n):
@@ -21,7 +24,7 @@ class Prim:
             data[x].append((y, val))
             data[y].append((x, val))
 
-        lowcost = [float('inf')] * (self.n + 1)  # 将初始值设为无穷大
+        lowcost = [float("inf")] * (self.n + 1)  # 将初始值设为无穷大
         closet = [0] * (self.n + 1)
 
         # 从顶点 1 开始构建MST
@@ -35,7 +38,7 @@ class Prim:
         # 还需要加入 n-1 个顶点
         for _ in range(self.n - 1):
             # 寻找未加入集合中距离最近的点 (贪心)
-            min_cost = float('inf')
+            min_cost = float("inf")
             v = -1
             for j in range(1, self.n + 1):
                 if sign[j] == 0 and lowcost[j] < min_cost:
@@ -59,10 +62,10 @@ class Prim:
         print(total_cost)
 
 
-
 """
     Kruskal算法
 """
+
 
 class UnionFind:
     """并查集类，用于高效管理集合的合并与查询"""
@@ -128,6 +131,40 @@ def kruskal(n, edges):
     # 如果无法构成生成树（图不连通），edges_used 会 < n-1
     # 根据题目要求，这里可以返回 -1 或抛出异常
     return mst_cost
+
+
+def prim_heap(n, edges, start=1):
+    """堆优化 Prim；edges 中每条边格式为 (weight, u, v)，顶点编号为 1..n。
+
+    返回最小生成树总权重；图不连通时返回 -1。
+    """
+    graph = [[] for _ in range(n + 1)]
+    for weight, u, v in edges:
+        graph[u].append((weight, v))
+        graph[v].append((weight, u))
+
+    visited = [False] * (n + 1)
+    best = [math.inf] * (n + 1)
+    best[start] = 0
+    heap = [(0, start)]
+    total_cost = 0
+    visited_count = 0
+
+    while heap:
+        weight, vertex = heapq.heappop(heap)
+        if visited[vertex]:
+            continue
+
+        visited[vertex] = True
+        visited_count += 1
+        total_cost += weight
+
+        for next_weight, neighbor in graph[vertex]:
+            if not visited[neighbor] and next_weight < best[neighbor]:
+                best[neighbor] = next_weight
+                heapq.heappush(heap, (next_weight, neighbor))
+
+    return total_cost if visited_count == n else -1
 
 
 if __name__ == "__main__":

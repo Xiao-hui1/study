@@ -5,6 +5,7 @@ import pytesseract
 from PIL import Image
 
 import time
+
 headers = {
     "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
     "accept-language": "zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
@@ -13,22 +14,24 @@ headers = {
     "pragma": "no-cache",
     "priority": "u=0, i",
     "referer": "https://www.zhihu.com/signin?next=%2F",
-    "sec-ch-ua": "\"Not=A?Brand\";v=\"99\", \"Microsoft Edge\";v=\"151\", \"Chromium\";v=\"151\"",
+    "sec-ch-ua": '"Not=A?Brand";v="99", "Microsoft Edge";v="151", "Chromium";v="151"',
     "sec-ch-ua-mobile": "?0",
-    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-ch-ua-platform": '"Windows"',
     "sec-fetch-dest": "document",
     "sec-fetch-mode": "navigate",
     "sec-fetch-site": "same-origin",
     "sec-fetch-user": "?1",
     "upgrade-insecure-requests": "1",
-    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36"
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
 }
 
 # session = requests.Session()
 # html = session.get('https://www.zhihu.com/',headers=headers).content.decode('utf-8')
 # print(html)
 driver = webdriver.Edge()
-driver.get('https://weread.qq.com/web/reader/e30323f0716ac22fe3092b2k16732dc0161679091c5aeb1')
+driver.get(
+    "https://weread.qq.com/web/reader/e30323f0716ac22fe3092b2k16732dc0161679091c5aeb1"
+)
 time.sleep(10)
 html = driver.page_source
 print(html)

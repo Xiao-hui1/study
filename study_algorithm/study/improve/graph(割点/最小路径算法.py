@@ -1,13 +1,14 @@
 """
-        Dijkstra算法：
-            1. 建立一个dist[]数组，p[]数组，graph[][]数组，dist中存放 第i 个节点到源节点得最短路径，
-            p[]数组中存放第i个节点得前驱节点，graph数组存放节点得权值
-            2. 初始化数组，把源节点到相邻的节点，的距离存放在dist数组中，在p[]数组中存放源节点。
-            3. 找，在dist数组中找到权值最小且没有被访问的节点，如果没有了则算法结束
-            4. 判，假设当前新加入的节点为t，如果t相邻的节点j，dist[j] > dist[t] + graph[t][j]，更新最短路径和p[]数组的前驱。
+Dijkstra算法：
+    1. 建立一个dist[]数组，p[]数组，graph[][]数组，dist中存放 第i 个节点到源节点得最短路径，
+    p[]数组中存放第i个节点得前驱节点，graph数组存放节点得权值
+    2. 初始化数组，把源节点到相邻的节点，的距离存放在dist数组中，在p[]数组中存放源节点。
+    3. 找，在dist数组中找到权值最小且没有被访问的节点，如果没有了则算法结束
+    4. 判，假设当前新加入的节点为t，如果t相邻的节点j，dist[j] > dist[t] + graph[t][j]，更新最短路径和p[]数组的前驱。
 
 """
-import sys, math, random, collections
+
+# import sys, math, random, collections
 
 
 # class Dijkstra:
@@ -91,20 +92,18 @@ import sys, math, random, collections
 # if __name__ == '__main__':
 #     solve()
 
-import sys, collections
 import heapq as hp
 
 
 def Dijkstra():
     n, m = map(int, input().split())
-    cost = 0
     dist = [float("inf")] * (n + 1)
     d = []
-    g = [[]  for _ in range(n + 1)]
+    g = [[] for _ in range(n + 1)]
     for i in range(m):
-        u, v = map(int, input().split())
-        g[u].append(v)
-        g[v].append(u)
+        u, v, w = map(int, input().split())
+        g[u].append((v, w))
+        g[v].append((u, w))
 
     dist[1] = 0
     hp.heappush(d, (0, 1))
@@ -113,13 +112,17 @@ def Dijkstra():
         if dist[v] < c:
             continue
 
-        for (u, w) in g[v]:
+        for u, w in g[v]:
             if dist[u] > dist[v] + w:
                 dist[u] = dist[v] + w
-                hp.heappush(d, (dist[v], u))
+                hp.heappush(d, (dist[u], u))
 
-    for i in range(1, n+1):
+    for i in range(1, n + 1):
         if dist[i] == float("inf"):
             print(-1)
         else:
             print(dist[i])
+
+
+if __name__ == "__main__":
+    Dijkstra()

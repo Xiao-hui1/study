@@ -13,28 +13,41 @@ class AhoCorasick:
         node['#'] = True  # 标记单词结束
 
     def build_fail(self):
-        # 构建 Fail 指针 (简化版逻辑)
+        # 构建 Fail 指针：BFS 逐层求每个节点失配时的回退位置
         queue = collections.deque()
         for char, child in self.root.items():
-            queue.append((child, self.root))  # (当前节点, 父节点)
+            child['fail'] = self.root  # 第一层节点的 fail 指向根
+            queue.append(child)
 
         while queue:
-            node, parent = queue.popleft()
-            # 这里省略了复杂的 fail 赋值逻辑，实际实现需递归查找
+            node = queue.popleft()
             for char, child in node.items():
-                queue.append((child, node))
+                if char == '#' or char == 'fail':
+                    continue  # 跳过结束标记和 fail 指针本身
+                queue.append(child)
+                fail = node['fail']
+                while fail is not self.root and char not in fail:
+                    fail = fail['fail']
+                child['fail'] = fail[char] if char in fail else self.root
 
     def search(self, text):
-        # 匹配过程
+        # 匹配过程，打印所有模式串出现的结束位置
         node = self.root
         for i, char in enumerate(text):
-            # 如果字符不在当前节点的子节点中
-            while char not in node and node is not self.root:
-                # node = node.fail # 顺着失败指针回溯 (伪代码)
-                pass
-            if char in node:
-                # node = node[char] # 走到下一个节点 (伪代码)
-                pass
-            # 检查当前节点是否包含单词结尾
-            if '#' in node:
-                print(f"在位置 {i} 找到单词")
+            while node is not self.root and char not in node:
+                node = node['fail']  # 顺着失败指针回溯
+            node = node.get(char, self.root)
+            # 沿 fail 链检查所有以当前位置结尾的单词
+            tmp = node
+            while tmp is not self.root:
+                if '#' in tmp:
+                    print(f"在位置 {i} 找到单词")
+                tmp = tmp['fail']
+
+
+if __name__ == "__main__":
+    ac = AhoCorasick()
+    for word in ["he", "she", "his", "hers"]:
+        ac.add_word(word)
+    ac.build_fail()
+    ac.search("ushers")
